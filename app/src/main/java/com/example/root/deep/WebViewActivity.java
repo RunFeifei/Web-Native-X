@@ -14,7 +14,6 @@ import butterknife.OnClick;
 
 public class WebViewActivity extends BaseActivity {
 
-
     @BindView(R.id.webView)
     WebView webView;
     @BindView(R.id.btnGoBack)
