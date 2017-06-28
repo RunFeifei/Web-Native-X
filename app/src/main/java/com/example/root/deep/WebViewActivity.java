@@ -1,9 +1,7 @@
 package com.example.root.deep;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -28,8 +26,10 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.btnStop)
     TextView btnStop;
 
-    WebViewClient getClient() {
-        return new WebViewClient() {
+    private WebViewClient webViewClient;
+
+    private void initWebClient() {
+        webViewClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (DeepLinkHelper.checkScheme(url)) {
@@ -48,10 +48,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        webView.setWebViewClient(getClient());
-        if (Build.VERSION.SDK_INT >= 19) {
-            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        }
+        initWebClient();
+        webView.setWebViewClient(webViewClient);
         webView.loadUrl("file:///android_asset/index.html");
     }
 

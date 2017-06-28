@@ -27,7 +27,6 @@ public class DeepLinkHelper {
         Intent intent = new Intent(Intent.ACTION_VIEW);//action
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
-        context.finish();
     }
 
     public static HashMap<String, String> parseUrl2Map(String url) {
@@ -49,6 +48,7 @@ public class DeepLinkHelper {
         String action = map.get(DeepLinkHelper.ACTION);
         if (action == null) {
             srcActivity.finish();
+            return;
         }
         Method[] methods = srcActivity.getClass().getDeclaredMethods();
         for (Method method : methods) {
@@ -61,9 +61,8 @@ public class DeepLinkHelper {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+                srcActivity.finish();
             }
         }
     }

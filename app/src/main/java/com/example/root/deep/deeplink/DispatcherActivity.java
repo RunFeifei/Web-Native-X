@@ -16,6 +16,7 @@ public class DispatcherActivity extends BaseActivity {
         HashMap<String, String> map = DeepLinkHelper.parseUrl2Map(url);
         if (map == null) {
             finish();
+            return;
         }
         DeepLinkHelper.invokebyAction(this, map);
     }

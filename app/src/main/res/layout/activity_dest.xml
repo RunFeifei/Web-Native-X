@@ -13,7 +13,6 @@
         android:paddingTop="12dp"
         android:paddingLeft="30dp"
         android:textSize="20dp"
-        android:text="DeepLink"
         android:lineSpacingMultiplier="2"
         />
 
