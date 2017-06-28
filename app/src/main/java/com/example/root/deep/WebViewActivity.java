@@ -1,12 +1,15 @@
 package com.example.root.deep;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.root.deep.base.BaseActivity;
+import com.example.root.deep.deeplink.DeepLinkHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,9 +32,10 @@ public class WebViewActivity extends BaseActivity {
         return new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                /*if (DeepLink.check(WebViewActivity.this, url, "")) {
+                if (DeepLinkHelper.checkScheme(url)) {
+                    DeepLinkHelper.jump2nativeDispacher(WebViewActivity.this, url);
                     return true;
-                }*/
+                }
                 return super.shouldOverrideUrlLoading(view, url);
             }
         };
@@ -45,6 +49,9 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         webView.setWebViewClient(getClient());
+        if (Build.VERSION.SDK_INT >= 19) {
+            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
         webView.loadUrl("file:///android_asset/index.html");
     }
 

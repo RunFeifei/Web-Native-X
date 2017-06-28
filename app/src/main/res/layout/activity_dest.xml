@@ -7,14 +7,14 @@
     >
 
     <TextView
-        android:id="@+id/textDeep"
+        android:id="@+id/textTip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingLeft="30dp"
         android:textSize="20dp"
         android:text="DeepLink"
-        android:padding="12dp"
+        android:lineSpacingMultiplier="2"
         />
-
 
 </LinearLayout>

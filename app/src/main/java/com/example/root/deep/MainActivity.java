@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import com.example.root.deep.base.BaseActivity;
 
+import butterknife.OnClick;
+
 public class MainActivity extends BaseActivity {
+
 
     @Override
     protected int getContentViewId() {
@@ -14,7 +17,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        startActivity(new Intent(this,WebViewActivity.class));
 
+    }
+
+    @OnClick(R.id.textDeep)
+    public void textDeep() {
+        startActivity(new Intent(this, WebViewActivity.class));
     }
 }

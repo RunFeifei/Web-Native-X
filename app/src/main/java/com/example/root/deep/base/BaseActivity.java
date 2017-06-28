@@ -2,7 +2,6 @@ package com.example.root.deep.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -20,22 +19,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View content = getLayoutInflater().inflate(getContentViewId(), null);
-        setContentView(content);
-        butterKinfeBinder = ButterKnife.bind(this);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        try {
+            View content = getLayoutInflater().inflate(getContentViewId(), null);
+            if (content != null) {
+                setContentView(content);
+                butterKinfeBinder = ButterKnife.bind(this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         init(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        butterKinfeBinder.unbind();
+        if (butterKinfeBinder != null) {
+            butterKinfeBinder.unbind();
+        }
     }
 
 
