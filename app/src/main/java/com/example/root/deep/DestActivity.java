@@ -25,13 +25,25 @@ public class DestActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setJsText();
+        setTipText();
+    }
+
+    private void setTipText() {
         HashMap<String, String> map = (HashMap<String, String>) getIntent().getSerializableExtra(DeepLinkHelper.PARAMS);
+        if (map == null) {
+            return;
+        }
         Iterator iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
             textTip.append(entry.getKey() + "-->" + entry.getValue());
             textTip.append("\n");
         }
+    }
+
+    private void setJsText() {
+        textTip.setText(getIntent().getStringExtra("data"));
     }
 
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Deep.iml" filepath="$PROJECT_DIR$/Deep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Webative.iml" filepath="$PROJECT_DIR$/Webative.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

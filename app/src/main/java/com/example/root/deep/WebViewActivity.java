@@ -1,7 +1,9 @@
 package com.example.root.deep;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -50,8 +52,14 @@ public class WebViewActivity extends BaseActivity {
         initWebClient();
         webView.setWebViewClient(webViewClient);
         webView.loadUrl("file:///android_asset/index.html");
+        webView.addJavascriptInterface(new JsInteraction(), "Hello_Js");
+        webView.getSettings().setJavaScriptEnabled(true);
     }
 
+    @OnClick(R.id.textCallJS)
+    public void onNativeBtnClick() {
+        webView.loadUrl("javascript:onNativeClicked('HelloJs')");
+    }
 
     @OnClick({R.id.btnGoBack, R.id.btnGoForward, R.id.btnRefresh, R.id.btnStop})
     public void onViewClicked(View view) {
@@ -70,4 +78,20 @@ public class WebViewActivity extends BaseActivity {
                 break;
         }
     }
+
+    private class JsInteraction {
+
+        @JavascriptInterface
+        public void toDestPage(final String param) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(WebViewActivity.this, DestActivity.class);
+                    intent.putExtra("data", param);
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
 }

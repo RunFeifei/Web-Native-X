@@ -1,8 +1,22 @@
 <p style="text-align:center">
     <a href="https://www.baidu.com">
-    <input style="width:300px; height:80px" name="01" type="button" value="This is Webative APP"/></a>
+        <input style="width:300px; height:80px" type="button" value="This is Webative APP"/></a>
 </p>
 <p style="text-align:center">
     <a href="dianrong://tonative?action=ACTION_JUMP&amp;content=HelloWorld&amp;platform=Webative&amp;source=FromSelf">
-    <input style="width:300px; height:80px" name="01" type="button" value="ToDestPage"/></a>
+        <input style="width:300px; height:80px" type="button" value="ToDestPageByUrl"/></a>
 </p>
+<p style="text-align:center">
+    <a onclick="window.Hello_Js.toDestPage('HelloNative')">
+        <input style="width:300px; height:80px" type="button" value="toDestPageByJs"/></a>
+</p>
+
+
+<div id="divshow" style="text-align:center"></div>
+
+<script type="text/javascript">
+    function onNativeClicked(content)
+    {
+        document.getElementById("divshow").innerHTML = content;
+    }
+</script>
