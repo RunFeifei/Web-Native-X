@@ -2,13 +2,20 @@
     <a href="https://www.baidu.com">
         <input style="width:300px; height:80px" type="button" value="This is Webative APP"/></a>
 </p>
+
 <p style="text-align:center">
-    <a href="dianrong://tonative?action=ACTION_JUMP&amp;content=HelloWorld&amp;platform=Webative&amp;source=FromSelf">
+    <a href="dianrong://tonative?action=ACTION_JUMP&content=HelloWorld&platform=Webative&source=FromSelf">
         <input style="width:300px; height:80px" type="button" value="ToDestPageByUrl"/></a>
 </p>
+
 <p style="text-align:center">
     <a onclick="window.Hello_Js.toDestPage('HelloNative')">
         <input style="width:300px; height:80px" type="button" value="toDestPageByJs"/></a>
+</p>
+
+<p style="text-align:center">
+    <a onclick="clickprompt('dianrong://tonative?action=ACTION_JUMP&content=HelloWorld&platform=Webative&source=FromSelf')">
+        <input style="width:300px; height:80px" type="button" value="toDestPageByChromeClient"/></a>
 </p>
 
 
@@ -19,4 +26,25 @@
     {
         document.getElementById("divshow").innerHTML = content;
     }
+
+    function onNativeClicked2(content)
+    {
+        return "HelloNative"
+    }
+
+    function clickprompt(content)
+    {
+       var result= prompt(content);
+
+       document.getElementById("divshow").innerHTML = result;
+
+    }
+    function clickprompt(content)
+    {
+       var result= prompt(content);
+
+       document.getElementById("divshow").innerHTML = result;
+
+    }
+
 </script>

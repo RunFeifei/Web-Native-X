@@ -1,12 +1,18 @@
 package com.example.root.deep;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsPromptResult;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.root.deep.base.BaseActivity;
 import com.example.root.deep.deeplink.DeepLinkHelper;
@@ -27,10 +33,9 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.btnStop)
     TextView btnStop;
 
-    private WebViewClient webViewClient;
 
-    private void initWebClient() {
-        webViewClient = new WebViewClient() {
+    private WebViewClient getWebClient() {
+        return new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (DeepLinkHelper.checkScheme(url)) {
@@ -42,6 +47,20 @@ public class WebViewActivity extends BaseActivity {
         };
     }
 
+    private WebChromeClient getChomeClient() {
+        return new WebChromeClient() {
+            @Override
+            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+                Uri uri = Uri.parse(message);
+                if (uri.getScheme().equals("dianrong")) {
+                    result.confirm(uri.getHost());
+                    return true;
+                }
+                return super.onJsPrompt(view, url, message, defaultValue, result);
+            }
+        };
+    }
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_web;
@@ -49,8 +68,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        initWebClient();
-        webView.setWebViewClient(webViewClient);
+        webView.setWebViewClient(getWebClient());
+        webView.setWebChromeClient(getChomeClient());
         webView.loadUrl("file:///android_asset/index.html");
         webView.addJavascriptInterface(new JsInteraction(), "Hello_Js");
         webView.getSettings().setJavaScriptEnabled(true);
@@ -58,7 +77,18 @@ public class WebViewActivity extends BaseActivity {
 
     @OnClick(R.id.textCallJS)
     public void onNativeBtnClick() {
-        webView.loadUrl("javascript:onNativeClicked('HelloJs')");
+        /*webView.loadUrl("javascript:onNativeClicked('HelloJs')");
+
+        webView.evaluateJavascript("onNativeClicked2('HelloJs')", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                Toast.makeText(WebViewActivity.this, value, Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        new RequestMonitor().execute();
+
+
     }
 
     @OnClick({R.id.btnGoBack, R.id.btnGoForward, R.id.btnRefresh, R.id.btnStop})
@@ -91,6 +121,25 @@ public class WebViewActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
+        }
+    }
+
+    private class RequestMonitor extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                return "waked up";
+            }
+
+            return "Hello Dianrong";
+        }
+
+        @Override
+        protected void onPostExecute(String text) {
+            super.onPostExecute(text);
+            webView.loadUrl("javascript:onNativeClicked('" + text + "')");
         }
     }
 
