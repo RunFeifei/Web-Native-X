@@ -1,6 +1,8 @@
 package com.example.root.deep;
 
-public class DeepLinkActivity {
+import android.support.v7.app.AppCompatActivity;
+
+public class DeepLinkActivity  extends AppCompatActivity {
 
 
 }
