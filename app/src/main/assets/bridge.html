@@ -1,0 +1,77 @@
+<p style="text-align:center">
+    <a onclick="callNative('Hello native')">
+        <input style="width:300px; height:80px" type="button" value="callNative"/></a>
+</p>
+
+<p style="text-align:center">
+    <a onclick="jsSend('Hello native')">
+        <input style="width:300px; height:80px" type="button" value="JsSend"/></a>
+</p>
+
+<div id="divshow" style="text-align:center"></div>
+
+<script type="text/javascript">
+
+     function callNative(content) {
+            window.WebViewJavascriptBridge.callHandler(
+                'callNative'
+                , { content }
+                , function(responseData) {
+                    document.getElementById("divshow").innerHTML = responseData;
+                }
+            );
+        }
+
+     //在Java的BridgeHandler响应
+     function jsSend(content) {
+            window.WebViewJavascriptBridge.send(
+                content
+                , function(responseData) {
+                    document.getElementById("divshow").innerHTML = responseData
+                }
+            );
+        }
+
+    //以下是Js初始化...
+    function connectWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } else {
+            document.addEventListener(
+                'WebViewJavascriptBridgeReady'
+                , function() {
+                    callback(WebViewJavascriptBridge)
+                },
+                false
+            );
+        }
+    }
+
+    //webview.send在此通过responseCallback返回给JAVA
+    connectWebViewJavascriptBridge(function(bridge) {
+        bridge.init(function(message, responseCallback) {
+            console.log('JS got a message', message);
+            var data = {
+                'Javascript Responds': message
+            };
+            console.log('JS responding with', data);
+            responseCallback("JS get-->"+message+"--"+"JS response"+"Hello Native");
+        });
+
+        //在此进行JS的注册
+            bridge.registerHandler("callJs", function(data, responseCallback) {
+                document.getElementById("divshow").innerHTML = ("Js get-->" + data);
+                responseCallback("Hello Java");
+            });
+    })
+
+    bridge.init(function(message, responseCallback) {
+    console.log('JS got a message', message);
+    var data = {
+        'Javascript Responds': 'Wee!'
+    };
+    console.log('JS responding with', data);
+    responseCallback(data);
+    });
+
+</script>

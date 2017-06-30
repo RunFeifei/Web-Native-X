@@ -70,9 +70,9 @@ public class WebViewActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         webView.setWebViewClient(getWebClient());
         webView.setWebChromeClient(getChomeClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/index.html");
         webView.addJavascriptInterface(new JsInteraction(), "Hello_Js");
-        webView.getSettings().setJavaScriptEnabled(true);
     }
 
     @OnClick(R.id.textCallJS)

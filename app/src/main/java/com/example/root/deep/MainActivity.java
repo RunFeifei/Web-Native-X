@@ -24,4 +24,9 @@ public class MainActivity extends BaseActivity {
     public void textDeep() {
         startActivity(new Intent(this, WebViewActivity.class));
     }
+
+    @OnClick(R.id.textBridge)
+    public void onViewClicked() {
+        startActivity(new Intent(this, BridgeWebActivity.class));
+    }
 }
