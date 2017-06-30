@@ -12,7 +12,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="DeepLink"
+        android:text="General"
+        android:padding="12dp"
+        />
+
+    <TextView
+        android:id="@+id/textBridge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="JsBridge"
         android:padding="12dp"
         />
 
