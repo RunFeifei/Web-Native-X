@@ -1,10 +1,10 @@
-package com.example.root.deep.deeplink;
+package com.example.root.deeplink;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.root.deep.DestActivity;
-import com.example.root.deep.base.BaseActivity;
+import com.example.root.DestActivity;
+import com.example.root.base.BaseActivity;
 
 import java.util.HashMap;
 

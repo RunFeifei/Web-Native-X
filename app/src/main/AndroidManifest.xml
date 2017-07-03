@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.root.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".deeplink.DispatcherActivity"
+            android:name="com.example.root.deeplink.DispatcherActivity"
             android:allowTaskReparenting="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -31,12 +31,13 @@
                 <data android:scheme="dianrong" />
             </intent-filter>
         </activity>
-        <activity android:name=".DestActivity">
+        <activity android:name="com.example.root.DestActivity">
         </activity>
-        <activity android:name=".WebViewActivity">
+        <activity android:name="com.example.root.deeplink.WebViewActivity">
         </activity>
-        <activity android:name=".BridgeWebActivity">
+        <activity android:name="com.example.root.jsbridge.BridgeWebActivity">
         </activity>
+        <activity android:name="com.example.root.jsroad.RoadWebActivity" />
     </application>
 
 </manifest>

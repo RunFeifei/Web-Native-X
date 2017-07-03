@@ -1,4 +1,4 @@
-package com.example.root.deep.deeplink;
+package com.example.root.deeplink;
 
 import android.app.Activity;
 import android.content.Intent;

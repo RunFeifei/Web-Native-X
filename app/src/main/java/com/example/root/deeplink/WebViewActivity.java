@@ -1,4 +1,4 @@
-package com.example.root.deep;
+package com.example.root.deeplink;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,15 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.root.deep.base.BaseActivity;
-import com.example.root.deep.deeplink.DeepLinkHelper;
+import com.example.root.DestActivity;
+import com.example.root.deep.R;
+import com.example.root.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

@@ -1,15 +1,12 @@
-package com.example.root.deep;
+package com.example.root.jsbridge;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.JsPromptResult;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.example.root.deep.base.BaseActivity;
+import com.example.root.deep.R;
+import com.example.root.base.BaseActivity;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
@@ -43,6 +40,7 @@ public class BridgeWebActivity extends BaseActivity {
             @Override
             public void handler(String data, CallBackFunction function) {
                 toast(data);
+                //测试是否可以异步
                 function.onCallBack("Hello JS");
             }
         };
@@ -80,10 +78,10 @@ public class BridgeWebActivity extends BaseActivity {
         });*/
 
         //callJs Java主动调用并获得返回值
-       webView.callHandler("callJs", "Hello Js", new CallBackFunction() {
+        webView.callHandler("callJs", "Hello Js", new CallBackFunction() {
             @Override
             public void onCallBack(String data) {
-                toast("java get->"+data);
+                toast("java get->" + data);
             }
         });
     }

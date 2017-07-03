@@ -1,4 +1,4 @@
-package com.example.root.deep.base;
+package com.example.root.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;

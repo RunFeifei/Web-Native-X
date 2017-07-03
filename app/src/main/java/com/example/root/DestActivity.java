@@ -1,10 +1,11 @@
-package com.example.root.deep;
+package com.example.root;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.example.root.deep.base.BaseActivity;
-import com.example.root.deep.deeplink.DeepLinkHelper;
+import com.example.root.deep.R;
+import com.example.root.base.BaseActivity;
+import com.example.root.deeplink.DeepLinkHelper;
 
 import java.util.HashMap;
 import java.util.Iterator;
