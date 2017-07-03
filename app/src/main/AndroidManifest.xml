@@ -33,10 +33,11 @@
         </activity>
         <activity android:name=".DestActivity">
         </activity>
-        <activity android:name=".WebViewActivity">
+        <activity android:name=".deeplink.WebViewActivity">
         </activity>
-        <activity android:name=".BridgeWebActivity">
+        <activity android:name=".jsbridge.BridgeWebActivity">
         </activity>
+        <activity android:name=".jsroad.RoadWebActivity" />
     </application>
 
 </manifest>
