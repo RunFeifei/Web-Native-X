@@ -2,6 +2,8 @@
 <manifest package="com.fei.root.module"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -9,21 +11,22 @@
         <activity
             android:name=".ModuleActivity"
             android:allowTaskReparenting="true"
-            android:launchMode="singleTask"
-            >
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!--android:host,path 要么不写要么写对-->
-                <!--android:scheme,必须写-->
+                <!-- android:host,path 要么不写要么写对 -->
+                <!-- android:scheme,必须写 -->
 
                 <data
                     android:host="tonative"
                     android:scheme="dianrong" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ModuleFragment">
         </activity>
     </application>
 

@@ -26,7 +26,7 @@ public class DispatcherActivity extends BaseActivity {
     }
 
 
-    @LinkMap(action = "ACTION_JUMP")
+    @DeepLinkMap(action = "ACTION_JUMP")
     public void toDestActivity(HashMap<String, String> params) {
         Intent intent = new Intent(this, DestActivity.class);
         intent.putExtra(DeepLinkHelper.PARAMS, params);

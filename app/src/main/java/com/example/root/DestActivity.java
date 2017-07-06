@@ -6,13 +6,14 @@ import android.widget.TextView;
 import com.example.root.deep.R;
 import com.example.root.base.BaseActivity;
 import com.example.root.deeplink.DeepLinkHelper;
+import com.fei.processor.annotation.Router;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.BindView;
-
+@Router(param = "dest",module = "app")
 public class DestActivity extends BaseActivity {
 
 
