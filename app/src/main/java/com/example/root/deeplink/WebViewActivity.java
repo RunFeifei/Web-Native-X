@@ -86,8 +86,6 @@ public class WebViewActivity extends BaseActivity {
         });*/
 
         new RequestMonitor().execute();
-
-
     }
 
     @OnClick({R.id.btnGoBack, R.id.btnGoForward, R.id.btnRefresh, R.id.btnStop})
