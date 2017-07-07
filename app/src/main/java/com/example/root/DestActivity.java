@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.BindView;
-@Router(param = "dest",module = "app")
+@Router(action = "dest",module = "app")
 public class DestActivity extends BaseActivity {
 
 

@@ -2,6 +2,7 @@ package com.example.root;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.root.base.BaseActivity;
 import com.example.root.deep.R;
@@ -13,7 +14,7 @@ import com.fei.root.module.ModuleActivity;
 
 import butterknife.OnClick;
 
-@Router(param = "main", module = "app")
+@Router(action = "main", module = "app")
 public class MainActivity extends BaseActivity {
 
 
@@ -45,5 +46,10 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.textModule)
     public void onModuleClicked() {
         startActivity(new Intent(this, ModuleActivity.class));
+    }
+
+    @OnClick(R.id.textTest)
+    public void onTestClicked() {
+        Log.e("TAG-->",getString(R.string.modules));
     }
 }

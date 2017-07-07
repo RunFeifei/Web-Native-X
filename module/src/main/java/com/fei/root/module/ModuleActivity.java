@@ -8,7 +8,7 @@ import com.fei.processor.annotation.Router;
 import java.util.HashMap;
 
 
-@Router(param = "moduleActivity",module = "module")
+@Router(action = "moduleActivity",module = "module")
 public class ModuleActivity extends AppCompatActivity {
 
     @Override

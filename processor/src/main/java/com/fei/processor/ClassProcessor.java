@@ -11,6 +11,7 @@ import com.squareup.javapoet.WildcardTypeName;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -36,9 +37,10 @@ public class ClassProcessor extends AbstractProcessor {
     private static final ClassName STRING = ClassName.get("java.lang", "String");
     private static final ClassName CLASS = ClassName.get("java.lang", "Class");
 
-
     private Filer filer;
     private Messager messager;
+
+    private Set<String> moduleSet = new HashSet<>(8);
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -85,8 +87,8 @@ public class ClassProcessor extends AbstractProcessor {
                 continue;
             }
             Router router = element.getAnnotation(Router.class);
-            String param = router == null ? null : router.param();
-            method.addStatement("map.put($S,$T.class)", param, ClassName.get(getPackageName(className), getSimpleName(className)));
+            String action = router == null ? null : router.action();
+            method.addStatement("map.put($S,$T.class)", action, ClassName.get(getPackageName(className), getSimpleName(className)));
         }
         method.addStatement("return map");
     }
@@ -109,6 +111,7 @@ public class ClassProcessor extends AbstractProcessor {
             Router router = element.getAnnotation(Router.class);
             moduleName = router == null ? null : router.module();
             if (moduleName != null) {
+                moduleSet.add(moduleName);
                 return moduleName;
             }
         }
@@ -146,7 +149,7 @@ public class ClassProcessor extends AbstractProcessor {
      */
     private String getSimpleName(String className) {
         int index = className.lastIndexOf(".");
-        return className.substring(index+1, className.length());
+        return className.substring(index + 1, className.length());
     }
 
     private void writeToLocal(TypeSpec.Builder classBuilder, String moduleName) {

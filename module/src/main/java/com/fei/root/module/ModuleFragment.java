@@ -1,16 +1,25 @@
 package com.fei.root.module;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.fei.processor.annotation.Router;
 
-@Router(param = "moduleFragment",module = "module")
-public class ModuleFragment extends AppCompatActivity {
+@Router(action = "moduleFragment", module = "module")
+public class ModuleFragment extends Fragment {
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_module_fragment);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        this.startActivityForResult(null, 0);
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+
+
     }
 }
