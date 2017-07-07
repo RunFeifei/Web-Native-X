@@ -13,6 +13,7 @@ import com.fei.root.module.ModuleActivity;
 
 import butterknife.OnClick;
 
+@Router(param = "main", module = "app")
 public class MainActivity extends BaseActivity {
 
 

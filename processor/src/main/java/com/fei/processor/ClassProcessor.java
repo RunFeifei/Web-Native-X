@@ -7,6 +7,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.WildcardTypeName;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,6 +34,7 @@ public class ClassProcessor extends AbstractProcessor {
 
     private static final ClassName HASH_MAP = ClassName.get("java.util", "HashMap");
     private static final ClassName STRING = ClassName.get("java.lang", "String");
+    private static final ClassName CLASS = ClassName.get("java.lang", "Class");
 
 
     private Filer filer;
@@ -71,7 +73,7 @@ public class ClassProcessor extends AbstractProcessor {
         String moduleName = getModuleName(classSet);
         TypeSpec.Builder classBuilder = getClassBuilder(moduleName);
         MethodSpec.Builder methodBuilder = getMethodBuilder();
-        generatetMethoBody(methodBuilder,classSet);
+        generatetMethoBody(methodBuilder, classSet);
         classBuilder.addMethod(methodBuilder.build());
         writeToLocal(classBuilder, moduleName);
     }
@@ -84,21 +86,21 @@ public class ClassProcessor extends AbstractProcessor {
             }
             Router router = element.getAnnotation(Router.class);
             String param = router == null ? null : router.param();
-            method.addStatement("map.put($S,$S)", param, className);
+            method.addStatement("map.put($S,$T.class)", param, ClassName.get(getPackageName(className), getSimpleName(className)));
         }
         method.addStatement("return map");
     }
 
     private TypeSpec.Builder getClassBuilder(String moduleName) {
-        return TypeSpec.classBuilder(getClassName(moduleName))
+        return TypeSpec.classBuilder(getFileName(moduleName))
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
     }
 
     private MethodSpec.Builder getMethodBuilder() {
         return MethodSpec.methodBuilder(Method_NAME)
-                .addModifiers(Modifier.PUBLIC,Modifier.STATIC)
-                .returns(ParameterizedTypeName.get(HASH_MAP, STRING, STRING))
-                .addStatement("$T<String,String> map = new $T<>()", HASH_MAP, HASH_MAP);
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(ParameterizedTypeName.get(HASH_MAP, STRING, ParameterizedTypeName.get(CLASS, WildcardTypeName.subtypeOf(Object.class))))
+                .addStatement("$T<String,Class<?>> map = new $T<>()", HASH_MAP, HASH_MAP);
     }
 
     private String getModuleName(Set<? extends Element> classSet) {
@@ -113,19 +115,43 @@ public class ClassProcessor extends AbstractProcessor {
         throw new RuntimeException("should define moduleValue to Router annotation");
     }
 
-    private String getPackageName(String moduleName) {
+    /**
+     * 获得生成文件的包名
+     */
+    private String getFilePackageName(String moduleName) {
         return String.format(PACKAGE_NAME, moduleName);
     }
 
-    private String getClassName(String moduleName) {
+    /**
+     * 获得生成文件的文件名
+     */
+    private String getFileName(String moduleName) {
         String name = moduleName.substring(0, 1).toUpperCase() + moduleName.substring(1);
         messager.printMessage(Diagnostic.Kind.NOTE, String.format(CLASSS_NAME, name));
         return String.format(CLASSS_NAME, name);
     }
 
+    /**
+     * @param className java.util.Set
+     * @return java.util
+     */
+    private String getPackageName(String className) {
+        int index = className.lastIndexOf(".");
+        return className.substring(0, index);
+    }
+
+    /**
+     * @param className java.util.Set
+     * @return java.util
+     */
+    private String getSimpleName(String className) {
+        int index = className.lastIndexOf(".");
+        return className.substring(index+1, className.length());
+    }
+
     private void writeToLocal(TypeSpec.Builder classBuilder, String moduleName) {
         TypeSpec typeSpec = classBuilder.build();
-        JavaFile javaFile = JavaFile.builder(getPackageName(moduleName), typeSpec).build();
+        JavaFile javaFile = JavaFile.builder(getFilePackageName(moduleName), typeSpec).build();
         try {
             javaFile.writeTo(filer);
         } catch (IOException ioexcption) {
