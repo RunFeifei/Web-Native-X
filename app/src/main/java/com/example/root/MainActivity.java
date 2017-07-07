@@ -9,6 +9,7 @@ import com.example.root.deep.R;
 import com.example.root.deeplink.WebViewActivity;
 import com.example.root.jsbridge.BridgeWebActivity;
 import com.example.root.jsroad.RoadWebActivity;
+import com.example.root.router.RouterHelper;
 import com.fei.processor.annotation.Router;
 import com.fei.root.module.ModuleActivity;
 
@@ -50,6 +51,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.textTest)
     public void onTestClicked() {
-        Log.e("TAG-->",getString(R.string.modules));
+        new RouterHelper().bind(this).bindAction("moduleActivity").doJump();
     }
 }

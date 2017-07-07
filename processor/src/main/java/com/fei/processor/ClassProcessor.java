@@ -29,18 +29,17 @@ import javax.tools.Diagnostic;
 @AutoService(javax.annotation.processing.Processor.class)
 public class ClassProcessor extends AbstractProcessor {
 
-    private static final String PACKAGE_NAME = "com.route.%1s";
+    public static final String PACKAGE_NAME = "com.feifei.route";
     private static final String CLASSS_NAME = "%1sRouteMap";
     private static final String Method_NAME = "getRouteMap";
 
     private static final ClassName HASH_MAP = ClassName.get("java.util", "HashMap");
     private static final ClassName STRING = ClassName.get("java.lang", "String");
     private static final ClassName CLASS = ClassName.get("java.lang", "Class");
+    private static final ClassName ROUTE_MAP = ClassName.get("com.fei.processor", "RouteMap");
 
     private Filer filer;
     private Messager messager;
-
-    private Set<String> moduleSet = new HashSet<>(8);
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -95,12 +94,14 @@ public class ClassProcessor extends AbstractProcessor {
 
     private TypeSpec.Builder getClassBuilder(String moduleName) {
         return TypeSpec.classBuilder(getFileName(moduleName))
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addSuperinterface(ROUTE_MAP)
+                ;
     }
 
     private MethodSpec.Builder getMethodBuilder() {
         return MethodSpec.methodBuilder(Method_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addModifiers(Modifier.PUBLIC)
                 .returns(ParameterizedTypeName.get(HASH_MAP, STRING, ParameterizedTypeName.get(CLASS, WildcardTypeName.subtypeOf(Object.class))))
                 .addStatement("$T<String,Class<?>> map = new $T<>()", HASH_MAP, HASH_MAP);
     }
@@ -111,18 +112,10 @@ public class ClassProcessor extends AbstractProcessor {
             Router router = element.getAnnotation(Router.class);
             moduleName = router == null ? null : router.module();
             if (moduleName != null) {
-                moduleSet.add(moduleName);
                 return moduleName;
             }
         }
         throw new RuntimeException("should define moduleValue to Router annotation");
-    }
-
-    /**
-     * 获得生成文件的包名
-     */
-    private String getFilePackageName(String moduleName) {
-        return String.format(PACKAGE_NAME, moduleName);
     }
 
     /**
@@ -154,7 +147,7 @@ public class ClassProcessor extends AbstractProcessor {
 
     private void writeToLocal(TypeSpec.Builder classBuilder, String moduleName) {
         TypeSpec typeSpec = classBuilder.build();
-        JavaFile javaFile = JavaFile.builder(getFilePackageName(moduleName), typeSpec).build();
+        JavaFile javaFile = JavaFile.builder(PACKAGE_NAME, typeSpec).build();
         try {
             javaFile.writeTo(filer);
         } catch (IOException ioexcption) {

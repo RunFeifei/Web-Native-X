@@ -15,7 +15,6 @@ android {
 
         String modules=new BufferedReader(new FileReader(project.rootProject.file('settings.gradle')))
                 .readLine().replace(" ","").replace("include","").replace(":","").replace("'","")
-        System.out.println(modules)
         resValue("string", "modules",modules)
     }
 
