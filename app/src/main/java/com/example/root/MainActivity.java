@@ -2,16 +2,15 @@ package com.example.root;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.root.base.BaseActivity;
 import com.example.root.deep.R;
 import com.example.root.deeplink.WebViewActivity;
 import com.example.root.jsbridge.BridgeWebActivity;
 import com.example.root.jsroad.RoadWebActivity;
-import com.example.root.router.RouterHelper;
 import com.fei.processor.annotation.Router;
 import com.fei.root.module.ModuleActivity;
+import com.fei.root.router.RouterHelper;
 
 import butterknife.OnClick;
 

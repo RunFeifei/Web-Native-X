@@ -1,4 +1,4 @@
-package com.example.root.router;
+package com.fei.root.router;
 
 import android.app.Activity;
 import android.app.Service;
@@ -9,8 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.root.WebativeApp;
-import com.example.root.deep.R;
 import com.fei.processor.ClassProcessor;
 import com.fei.processor.RouteMap;
 
@@ -20,7 +18,7 @@ import com.fei.processor.RouteMap;
 public class RouterHelper {
 
     private static final String TAG = RouterHelper.class.getSimpleName();
-    public static final String TBUNDLE = "bundle";
+    public static final String BUNDLE = "bundle";
 
 
     private AppCompatActivity activity;
@@ -110,7 +108,7 @@ public class RouterHelper {
 
     private String[] getRouteMapClassNames() {
 
-        final String[] modules = WebativeApp.getInstance().getString(R.string.modules).split(",");
+        final String[] modules = AppContext.getInstance().getString(R.string.modules).split(",");
         final String classFormat = "%1sRouteMap";
         final int len = modules.length;
 
@@ -159,7 +157,7 @@ public class RouterHelper {
 
     private Intent getIntent() {
         Class<?> targetClass = getTargetClass(action);
-        if (targetClass != null) {
+        if (targetClass == null) {
             Log.e(TAG, "could not match TargetClass");
             return null;
         }
@@ -175,7 +173,7 @@ public class RouterHelper {
             throw new RuntimeException("target class not activity");
         }
         Intent intent = new Intent(getContext(), targetClass);
-        intent.putExtra(TBUNDLE, bundle);
+        intent.putExtra(BUNDLE, bundle);
         intent.setFlags(flags);
         return intent;
     }

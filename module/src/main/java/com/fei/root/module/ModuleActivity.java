@@ -1,28 +1,24 @@
 package com.fei.root.module;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.fei.processor.annotation.Router;
+import com.fei.root.router.RouterHelper;
 
-import java.util.HashMap;
 
-
-@Router(action = "moduleActivity",module = "module")
+@Router(action = "moduleActivity", module = "module")
 public class ModuleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
-        getString(R.string.modules);
     }
 
-
-    public static HashMap<String, Class<?>> getRouteMap() {
-        HashMap<String,Class<?>> map = new HashMap<>();
-        map.put("moduleFragment",ModuleFragment.class);
-        map.put("moduleActivity",ModuleActivity.class);
-        return map;
+    public void onMouleClick(View v) {
+        new RouterHelper().bind(this).bindAction("main").doJump();
     }
+
 }
