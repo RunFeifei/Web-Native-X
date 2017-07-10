@@ -1,4 +1,4 @@
-package com.example.root.deep.jsbridge;
+package com.example.root.jsbridge;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.webkit.WebChromeClient;
 import android.widget.Toast;
 
 import com.example.root.deep.R;
-import com.example.root.deep.base.BaseActivity;
+import com.example.root.base.BaseActivity;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
@@ -40,6 +40,7 @@ public class BridgeWebActivity extends BaseActivity {
             @Override
             public void handler(String data, CallBackFunction function) {
                 toast(data);
+                //测试是否可以异步
                 function.onCallBack("Hello JS");
             }
         };

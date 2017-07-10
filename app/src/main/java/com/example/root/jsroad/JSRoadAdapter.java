@@ -1,4 +1,4 @@
-package com.example.root.deep.jsroad;
+package com.example.root.jsroad;
 
 import android.app.Activity;
 import android.net.Uri;

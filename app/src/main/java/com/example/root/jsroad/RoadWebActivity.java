@@ -1,4 +1,4 @@
-package com.example.root.deep.jsroad;
+package com.example.root.jsroad;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.example.root.deep.R;
-import com.example.root.deep.base.BaseActivity;
+import com.example.root.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

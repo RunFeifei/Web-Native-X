@@ -1,4 +1,4 @@
-package com.example.root.deep.deeplink;
+package com.example.root.deeplink;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,8 +52,8 @@ public class DeepLinkHelper {
         }
         Method[] methods = srcActivity.getClass().getDeclaredMethods();
         for (Method method : methods) {
-            LinkMap linkMap = method.getAnnotation(LinkMap.class);
-            if (linkMap != null && linkMap.action().equalsIgnoreCase(action)) {
+            DeepLinkMap deepLinkMap = method.getAnnotation(DeepLinkMap.class);
+            if (deepLinkMap != null && deepLinkMap.action().equalsIgnoreCase(action)) {
                 method.setAccessible(true);
                 try {
                     method.invoke(srcActivity, map);

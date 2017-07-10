@@ -1,4 +1,4 @@
-package com.example.root.deep.deeplink;
+package com.example.root.deeplink;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,9 +12,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.example.root.deep.DestActivity;
+import com.example.root.DestActivity;
 import com.example.root.deep.R;
-import com.example.root.deep.base.BaseActivity;
+import com.example.root.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -86,8 +86,6 @@ public class WebViewActivity extends BaseActivity {
         });*/
 
         new RequestMonitor().execute();
-
-
     }
 
     @OnClick({R.id.btnGoBack, R.id.btnGoForward, R.id.btnRefresh, R.id.btnStop})

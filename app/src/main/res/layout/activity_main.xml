@@ -35,6 +35,24 @@
         android:text="JsRoad"
         android:padding="12dp"
         />
+    <TextView
+        android:id="@+id/textModule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="toModule"
+        android:padding="12dp"
+        />
+    <TextView
+        android:id="@+id/textTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="Test"
+        android:padding="12dp"
+        />
 
 
 </LinearLayout>
