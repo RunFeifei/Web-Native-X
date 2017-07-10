@@ -8,7 +8,7 @@ import com.fei.processor.annotation.Router;
 import com.fei.root.router.RouterHelper;
 
 
-@Router(action = "moduleActivity", module = "module")
+@Router(action = "module1", module = "module")
 public class ModuleActivity extends AppCompatActivity {
 
     @Override
@@ -17,8 +17,8 @@ public class ModuleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_module);
     }
 
-    public void onMouleClick(View v) {
-        new RouterHelper().bind(this).bindAction("main").doJump();
+    public void onModuleClick(View v) {
+        new RouterHelper().create(this, ModuleRoutes.class).toMain("lucy", 13);
     }
 
 }

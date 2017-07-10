@@ -1,6 +1,7 @@
 package com.fei.root.router;
 
 import com.fei.processor.annotation.RouterItem;
+import com.fei.processor.annotation.RouterKey;
 
 /**
  * Created by PengFeifei on 17-7-10.
@@ -8,10 +9,7 @@ import com.fei.processor.annotation.RouterItem;
 
 public interface Routes {
 
-    @RouterItem(action = "moduleActivity")
-    String toModule(String name, int age);
-
-    @RouterItem(action = "main")
-    int toMain(String name, int age);
+    @RouterItem(action = "module1")
+    String toModule1(@RouterKey(key = "name") String name, @RouterKey(key = "age") int age);
 
 }

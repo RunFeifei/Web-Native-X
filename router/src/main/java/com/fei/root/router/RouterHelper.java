@@ -12,7 +12,9 @@ import android.util.Log;
 import com.fei.processor.ClassProcessor;
 import com.fei.processor.RouteMap;
 import com.fei.processor.annotation.RouterItem;
+import com.fei.processor.annotation.RouterKey;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -34,50 +36,43 @@ public class RouterHelper {
     private Bundle bundle;
     private Intercept intercept;
 
-    private static Routes routes;
-
-
     public RouterHelper() {
+        this.bundle = new Bundle();
     }
 
     public <T> T create(final AppCompatActivity context, final Class<T> service) {
+        return create(context, service, -1);
+    }
+
+
+    public <T> T create(final AppCompatActivity context, final Class<T> service, final int requestCode) {
         return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[] {service},
                 new InvocationHandler() {
-
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args)
                             throws Throwable {
                         RouterItem routerItem = method.getAnnotation(RouterItem.class);
-                        RouterHelper.this.bind(context).bindAction(routerItem.action()).doJump();
+                        //一个参数可以有多个注解,故是二维数组
+                        Annotation[][] parameterAnnotationsArray = method.getParameterAnnotations();
+                        for (int i = 0; i < parameterAnnotationsArray.length; i++) {
+                            for (Annotation annotation : parameterAnnotationsArray[i]) {
+                                if (annotation != null && annotation instanceof RouterKey) {
+                                    RouterKey routerKey = (RouterKey) annotation;
+                                    String key = routerKey.key();
+                                    RouterHelper.this.bindValue(key, args[i]);
+                                    Log.e(TAG, "key-->" + key + "----value-->" + args[i].toString());
+                                }
+                            }
+                        }
+                        RouterHelper.this.bind(context).bindAction(routerItem.action());
+                        if (requestCode < 0) {
+                            RouterHelper.this.doJump();
+                        } else {
+                            RouterHelper.this.doJump(requestCode);
+                        }
                         return null;
                     }
                 });
-    }
-
-
-    public static void init(final Context context, Class<?> aClass) {
-        if (routes != null) {
-            return;
-        }
-        synchronized (RouterHelper.class) {
-            if (routes != null) {
-                return;
-            }
-            routes = (Routes) Proxy.newProxyInstance(aClass.getClassLoader(), new Class<?>[] {aClass},
-                    new InvocationHandler() {
-
-                        @Override
-                        public Object invoke(Object proxy, Method method, Object... args) throws Throwable {
-
-                            /*RouterItem routerItem = method.getAnnotation(RouterItem.class);
-
-                            Type[] parameterTypes = method.getGenericParameterTypes();//获取注解参数类型
-                            Annotation[][] parameterAnnotationsArray = method.getParameterAnnotations();//拿到参数注解
-                            Annotation[] annotation = method.getDeclaredAnnotations();*/
-                            return null;
-                        }
-                    });
-        }
     }
 
 
@@ -105,16 +100,12 @@ public class RouterHelper {
     }
 
     public RouterHelper bindValue(String key, Object value) {
-        this.bundle = new Bundle();
         if (value instanceof String) {
             bundle.putString(key, (String) value);
-
         } else if (value instanceof Integer) {
             bundle.putInt(key, (int) value);
-
         } else if (value instanceof Boolean) {
             bundle.putBoolean(key, (boolean) value);
-
         }
         /*and else ...*/
         return this;
