@@ -11,6 +11,11 @@ import android.util.Log;
 
 import com.fei.processor.ClassProcessor;
 import com.fei.processor.RouteMap;
+import com.fei.processor.annotation.RouterItem;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 /**
  * Created by PengFeifei on 17-7-6.
@@ -29,7 +34,50 @@ public class RouterHelper {
     private Bundle bundle;
     private Intercept intercept;
 
+    private static Routes routes;
+
+
     public RouterHelper() {
+    }
+
+    public <T> T create(final AppCompatActivity context, final Class<T> service) {
+        return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[] {service},
+                new InvocationHandler() {
+
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args)
+                            throws Throwable {
+                        RouterItem routerItem = method.getAnnotation(RouterItem.class);
+                        RouterHelper.this.bind(context).bindAction(routerItem.action()).doJump();
+                        return null;
+                    }
+                });
+    }
+
+
+    public static void init(final Context context, Class<?> aClass) {
+        if (routes != null) {
+            return;
+        }
+        synchronized (RouterHelper.class) {
+            if (routes != null) {
+                return;
+            }
+            routes = (Routes) Proxy.newProxyInstance(aClass.getClassLoader(), new Class<?>[] {aClass},
+                    new InvocationHandler() {
+
+                        @Override
+                        public Object invoke(Object proxy, Method method, Object... args) throws Throwable {
+
+                            /*RouterItem routerItem = method.getAnnotation(RouterItem.class);
+
+                            Type[] parameterTypes = method.getGenericParameterTypes();//获取注解参数类型
+                            Annotation[][] parameterAnnotationsArray = method.getParameterAnnotations();//拿到参数注解
+                            Annotation[] annotation = method.getDeclaredAnnotations();*/
+                            return null;
+                        }
+                    });
+        }
     }
 
 
@@ -65,7 +113,7 @@ public class RouterHelper {
             bundle.putInt(key, (int) value);
 
         } else if (value instanceof Boolean) {
-            bundle.putBoolean(key, (Boolean) value);
+            bundle.putBoolean(key, (boolean) value);
 
         }
         /*and else ...*/

@@ -11,6 +11,7 @@ import com.example.root.jsroad.RoadWebActivity;
 import com.fei.processor.annotation.Router;
 import com.fei.root.module.ModuleActivity;
 import com.fei.root.router.RouterHelper;
+import com.fei.root.router.Routes;
 
 import butterknife.OnClick;
 
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.textTest)
     public void onTestClicked() {
-        new RouterHelper().bind(this).bindAction("moduleActivity").doJump();
+        //        new RouterHelper().bind(this).bindAction("moduleActivity").doJump();
+        new RouterHelper().create(this, Routes.class).toModule("1", 1);
     }
 }
