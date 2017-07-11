@@ -15,6 +15,7 @@ public class ModuleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
+        setTitle("ModuleActivity");
     }
 
     public void onModuleClick(View v) {

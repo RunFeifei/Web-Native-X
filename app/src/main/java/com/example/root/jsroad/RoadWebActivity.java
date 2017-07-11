@@ -30,11 +30,12 @@ public class RoadWebActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setTitle("RoadWebActivity");
         webView.setWebChromeClient(getChromeClient());
         webView.setWebViewClient(getWebClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/road.html");
-        JSRoadAdapter.bindMethods("HelloJS", this);
+        JSRoadHelper.bindMethods("HelloJS", this);
     }
 
     private WebChromeClient getChromeClient() {
@@ -42,7 +43,7 @@ public class RoadWebActivity extends BaseActivity {
 
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-                result.confirm(JSRoadAdapter.invokeNativeMethod(view, message));
+                result.confirm(JSRoadHelper.invokeNativeMethod(view, message));
                 return true;
             }
         };

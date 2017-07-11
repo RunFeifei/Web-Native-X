@@ -4,8 +4,8 @@
 </p>
 
 <p style="text-align:center">
-    <a onclick="window.Hello_Js.toDestPage('HelloNative')">
-        <input style="width:300px; height:80px" type="button" value="toDestPageByJs"/></a>
+    <a onclick="window.JsInterface.toDestPage('HelloNative')">
+        <input style="width:300px; height:80px" type="button" value="JavascriptInterface"/></a>
 </p>
 
 <p style="text-align:center">
@@ -19,27 +19,19 @@
 <script type="text/javascript">
     function onNativeClicked(content)
     {
-        document.getElementById("divshow").innerHTML = content;
+        document.getElementById("divshow").innerHTML = "JS get-->" + content;
     }
 
     function onNativeClicked2(content)
     {
-        return "HelloNative"
+        document.getElementById("divshow").innerHTML = "JS get-->" + content;
+        return "HelloNative";
     }
 
     function clickprompt(content)
     {
        var result= prompt(content);
-
-       document.getElementById("divshow").innerHTML = result;
-
-    }
-    function clickprompt(content)
-    {
-       var result= prompt(content);
-
-       document.getElementById("divshow").innerHTML = result;
-
+       document.getElementById("divshow").innerHTML ="JS get-->" + result;
     }
 
 </script>

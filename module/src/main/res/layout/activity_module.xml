@@ -11,9 +11,11 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Hello Module"
+        android:layout_gravity="center"
+        android:text="ModuleActivity"
         android:onClick="onModuleClick"
         android:gravity="center"
+        android:textColor="@android:color/black"
         />
 
 </LinearLayout>

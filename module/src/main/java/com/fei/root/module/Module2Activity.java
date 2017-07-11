@@ -14,6 +14,7 @@ public class Module2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module2);
+        setTitle("Module2Activity");
         Bundle bundle = getIntent().getBundleExtra(RouterHelper.BUNDLE);
         ((TextView) findViewById(R.id.text1)).setText(bundle.getString("name"));
         ((TextView) findViewById(R.id.text2)).setText(Integer.toString(bundle.getInt("age")));
