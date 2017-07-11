@@ -27,6 +27,7 @@ public class BridgeWebActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setTitle("BridgeWebActivity");
         webView.setDefaultHandler(getBridgeHandler());
         webView.setWebChromeClient(getChromeClient());
         webView.setWebViewClient(getBridgeClient());

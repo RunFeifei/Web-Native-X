@@ -12,17 +12,16 @@ import java.util.HashMap;
  * only for activity
  */
 
-public class JSRoadAdapter {
+public class JSRoadHelper {
     private static final String SCHEME = "dianrong";
-
 
     private static HashMap<String, HashMap<String, Method>> map = new HashMap<>();
 
     public static void bindMethods(String name, Activity activity) {
-        map.put(name, getInjectMethods(activity.getClass()));
+        map.put(name, getRegisteredMethods(activity.getClass()));
     }
 
-    private static HashMap<String, Method> getInjectMethods(Class clazz) {
+    private static HashMap<String, Method> getRegisteredMethods(Class clazz) {
         HashMap<String, Method> hashMap = new HashMap<>();
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {

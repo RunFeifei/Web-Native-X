@@ -10,6 +10,6 @@ import com.fei.root.router.Routes;
 
 public interface ModuleRoutes extends Routes {
 
-    @RouterItem(action = "main")
+    @RouterItem(action = "router")
     Integer toMain(@RouterKey(key = "name") String name, @RouterKey(key = "age") int age);
 }

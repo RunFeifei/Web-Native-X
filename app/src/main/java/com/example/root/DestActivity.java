@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.BindView;
-@Router(action = "dest",module = "app")
+@Router(action = "dest")
 public class DestActivity extends BaseActivity {
 
 
@@ -27,6 +27,7 @@ public class DestActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setTitle("DestActivity");
         setJsText();
         setTipText();
     }

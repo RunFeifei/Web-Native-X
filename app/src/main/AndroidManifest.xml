@@ -12,8 +12,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        tools:replace="android:name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:name">
         <activity android:name="com.example.root.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.root.deeplink.DispatcherActivity"
+            android:name="com.example.root.deeplink.DeeplinkActivity"
             android:allowTaskReparenting="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -31,7 +31,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="dianrong" />
+                <data
+                    android:host="tonative"
+                    android:scheme="dianrong" />
+
             </intent-filter>
         </activity>
         <activity android:name="com.example.root.DestActivity">
@@ -41,6 +44,8 @@
         <activity android:name="com.example.root.jsbridge.BridgeWebActivity">
         </activity>
         <activity android:name="com.example.root.jsroad.RoadWebActivity" />
+        <activity android:name="com.example.root.router.RouterActivity">
+        </activity>
     </application>
 
 </manifest>

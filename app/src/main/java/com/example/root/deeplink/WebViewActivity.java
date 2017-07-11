@@ -1,20 +1,20 @@
 package com.example.root.deeplink;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.root.DestActivity;
-import com.example.root.deep.R;
 import com.example.root.base.BaseActivity;
+import com.example.root.deep.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,7 +31,12 @@ public class WebViewActivity extends BaseActivity {
     TextView btnRefresh;
     @BindView(R.id.btnStop)
     TextView btnStop;
-
+    @BindView(R.id.textCallJS1)
+    TextView textCallJS1;
+    @BindView(R.id.textCallJS2)
+    TextView textCallJS2;
+    @BindView(R.id.textCallJS3)
+    TextView textCallJS3;
 
     private WebViewClient getWebClient() {
         return new WebViewClient() {
@@ -67,26 +72,14 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setTitle("WebViewActivity");
         webView.setWebViewClient(getWebClient());
         webView.setWebChromeClient(getChomeClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/index.html");
-        webView.addJavascriptInterface(new JsInteraction(), "Hello_Js");
+        webView.addJavascriptInterface(new JsInteraction(), "JsInterface");
     }
 
-    @OnClick(R.id.textCallJS)
-    public void onNativeBtnClick() {
-        /*webView.loadUrl("javascript:onNativeClicked('HelloJs')");
-
-        webView.evaluateJavascript("onNativeClicked2('HelloJs')", new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String value) {
-                Toast.makeText(WebViewActivity.this, value, Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        new RequestMonitor().execute();
-    }
 
     @OnClick({R.id.btnGoBack, R.id.btnGoForward, R.id.btnRefresh, R.id.btnStop})
     public void onViewClicked(View view) {
@@ -106,6 +99,31 @@ public class WebViewActivity extends BaseActivity {
         }
     }
 
+    @OnClick({R.id.textCallJS1, R.id.textCallJS2, R.id.textCallJS3})
+    public void onNativeClicked(View view) {
+        switch (view.getId()) {
+            case R.id.textCallJS1: {
+                webView.loadUrl("javascript:onNativeClicked('HelloJs')");
+                break;
+            }
+            case R.id.textCallJS2: {
+                webView.evaluateJavascript("onNativeClicked2('HelloJs')", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        Toast.makeText(WebViewActivity.this, "Native get-->" + value, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+            }
+            case R.id.textCallJS3: {
+                new RequestMonitor().execute();
+                break;
+            }
+        }
+
+
+    }
+
     private class JsInteraction {
 
         @JavascriptInterface
@@ -113,9 +131,7 @@ public class WebViewActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(WebViewActivity.this, DestActivity.class);
-                    intent.putExtra("data", param);
-                    startActivity(intent);
+                    Toast.makeText(WebViewActivity.this, "Native get-->" + param, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -129,8 +145,7 @@ public class WebViewActivity extends BaseActivity {
             } catch (InterruptedException e) {
                 return "waked up";
             }
-
-            return "Hello Dianrong";
+            return "HelloJs";
         }
 
         @Override
