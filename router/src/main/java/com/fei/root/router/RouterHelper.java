@@ -147,7 +147,7 @@ public class RouterHelper {
 
     private String[] getRouteMapClassNames() {
 
-        final String[] modules = AppContext.getInstance().getString(R.string.modules).split(",");
+        final String[] modules = GlobalContext.getInstance().getString(R.string.modules).split(",");
         final String classFormat = "%1sRouteMap";
         final int len = modules.length;
 

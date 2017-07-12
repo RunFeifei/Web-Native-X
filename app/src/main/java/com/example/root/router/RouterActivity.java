@@ -34,6 +34,6 @@ public class RouterActivity extends BaseActivity {
 
     @OnClick(R.id.textView)
     public void onViewClicked() {
-        new RouterHelper().create(this, AppRoutes.class).toModule1("tom", 12);
+        new RouterHelper().create(this, AppRoutes.class).toModule2("tom", 12);
     }
 }
