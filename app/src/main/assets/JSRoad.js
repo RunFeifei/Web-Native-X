@@ -3,10 +3,10 @@
     var JSRoad = win.JSRoad || (win.JSRoad = {});
     var Adapter = {
         callbackFun:null,
-        callNative: function (name, method, params, callback) {
+        callNative: function (method, params, callback) {
             console.log(callback);
             this.callbackFun = callback;
-            var uri="dianrong" + '://' + name + '/' + method + '?' + params;
+            var uri="dianrong" + '://' + "schema" + '/' + method + '?' + params;
             console.log(uri);
             window.prompt(uri, "");
         },

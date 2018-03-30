@@ -15,10 +15,10 @@ import java.util.HashMap;
 public class JSRoadHelper {
     private static final String SCHEME = "dianrong";
 
-    private static HashMap<String, HashMap<String, Method>> map = new HashMap<>();
+    private static HashMap<String, Method> map = new HashMap<>();
 
-    public static void bindMethods(String name, Activity activity) {
-        map.put(name, getRegisteredMethods(activity.getClass()));
+    public static void bindMethods( Activity activity) {
+        map = getRegisteredMethods(activity.getClass());
     }
 
     private static HashMap<String, Method> getRegisteredMethods(Class clazz) {
@@ -38,18 +38,10 @@ public class JSRoadHelper {
         if (!uri.getScheme().equals(SCHEME)) {
             return null;
         }
-        String name = uri.getHost();
         String methodName = uri.getPath().replace("/", "").trim();
         String param = uri.getEncodedQuery();
 
-        if (!map.containsKey(name)) {
-            return null;
-        }
-        HashMap<String, Method> methodHashMap = map.get(name);
-        if (methodHashMap == null || !methodHashMap.containsKey(methodName)) {
-            return null;
-        }
-        Method method = methodHashMap.get(methodName);
+        Method method = map.get(methodName);
         if (method == null) {
             return null;
         }

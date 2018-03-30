@@ -35,7 +35,7 @@ public class RoadWebActivity extends BaseActivity {
         webView.setWebViewClient(getWebClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/road.html");
-        JSRoadHelper.bindMethods("HelloJS", this);
+        JSRoadHelper.bindMethods(this);
     }
 
     private WebChromeClient getChromeClient() {
@@ -54,9 +54,9 @@ public class RoadWebActivity extends BaseActivity {
     }
 
     @JSRoadMap(map = true)
-    public String makeToast(String content) {
+    public String methodName(String content) {
         toast(content);
-        return "Hello Js";
+        return "Hello Js....";
     }
 
     @OnClick({R.id.btnGoBack, R.id.btnGoForward, R.id.btnRefresh, R.id.btnStop})
